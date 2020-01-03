@@ -43,10 +43,31 @@ const TOTAL = async(res)=>{
     })
 }
 
+const Chart = async(res)=>{
+    return await list.aggregate( [
+        {
+
+          $group: {
+              
+            _id: { month: "$month" },
+             data: { $sum:{$convert: { input:"$amount", to :"int"}} },
+          } 
+        }
+      ] ).exec((err,contract)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.json(contract)
+        }
+    })
+}
+
 
 
 module.exports = {
     list: list,
     listBills: listBills,
-    TOTAL:TOTAL
+    TOTAL:TOTAL,
+    Chart: Chart
 };

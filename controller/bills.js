@@ -25,3 +25,14 @@ exports.Total = (req, res) => {
       }
     })(req, res);
   } 
+
+  exports.Chart = (req, res) => {
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+      if (err || !user) {
+        console.log(err);
+        res.send(err);
+      } else {
+        return Bill.Chart( res)
+      }
+    })(req, res);
+  } 
