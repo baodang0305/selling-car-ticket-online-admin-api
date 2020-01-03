@@ -17,4 +17,6 @@ router.get('/logout' , adminController.logout)
 
 router.post('/getUser', adminController.getUserByEmail);
 router.post('/updateWallet', adminController.updateWallet);
+router.post('/updateAdmin',adminController.updateAdmin);
+
 module.exports = router;

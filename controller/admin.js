@@ -61,19 +61,16 @@ exports.defaultRouter = function (req, res, next) {
   res.send('respond with a resource');
 }
 
-exports.listUsers = (req, res, next) => {
+exports.listUsers = (req, res) => {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
       console.log(err);
-    }
-    if (info != undefined) {
-      console.log(info.message);
-      res.send(info.message);
+      res.send(err);
     } else {
       return Admin.listUsers(req, res)
 
     }
-  })(req, res, next);
+  })(req, res);
 }
 
 exports.logout = async (req, res) => {
@@ -86,10 +83,7 @@ exports.updateWallet = (req,res)=>{
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err|| !user ) {
       console.log(err);
-    }
-    if (info != undefined) {
-      console.log(info.message);
-      res.send(info.message);
+      res.send(err);;
     } else {
       var price = req.body.price;
       return  Admin.updateWallet(price)
@@ -102,10 +96,7 @@ exports.getUser = function (req, res) {
     if (err) {
 
       console.log(err);
-    }
-    if (info != undefined) {
-      console.log(info.message);
-      res.send(info.message);
+      res.send(err);
     } else {
       console.log('user found in db from route');
       res.status(200).json({user:{
@@ -125,13 +116,24 @@ exports.getUserByEmail = (req, res) => {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
       console.log(err);
-    }
-    if (info != undefined) {
-      console.log(info.message);
-      res.send(info.message);
+      res.send(err);
     } else {
       return Admin.getUserByEmail(req, res)
 
     }
   })(req, res);
+}
+
+exports.updateAdmin = (req, res)=>{
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+        if (err|| !user ) {
+          console.log(err);
+          res.send(err);
+        } else {
+          var email = req.body.email;
+          var values  = req.body
+          return  Admin.updateAdmin(values,email)
+        }
+      })(req, res);
+
 }

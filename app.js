@@ -10,7 +10,8 @@ var passport  = require('passport');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
-
+var routeRouter = require('./routes/route');
+var billRouter = require('./routes/bill');
 require('./config/passport');
 
 var app = express();
@@ -31,7 +32,8 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
-
+app.use('/routes', routeRouter);
+app.use('/bills', billRouter);
 mongoose.Promise = Promise;
 
 const run = async() => {
